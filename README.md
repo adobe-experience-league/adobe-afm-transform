@@ -1,10 +1,24 @@
 # adobe-afm-transform
 Adobe Flavored Markdown transform function for use within your toolchain.
 
-### API
-`afm(arg = '', klass = 'extension', converter = x => x)`
+### Installation
+`npm install adobe-afm-transform`
 
-The second and third arguments are optional. The second argument default value aligns with Adobe Experience League documents.
+### Usage
+#### ES Module
+```javascript
+import {afm} from 'adobe-afm-transform';
+```
+
+#### CommonJS / node.js
+```javascript
+const afm = require('adobe-afm-transform');
+```
+
+### Function parameters
+1. Markdown string to transform
+1. (Optional) CSS class to decorate, default is `extension`
+1. (Optional) Markdown compiler, default is passthru
 
 ### Example
 ```js
