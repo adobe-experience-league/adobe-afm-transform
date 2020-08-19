@@ -1,0 +1,38 @@
+{
+  "name": "adobe-afm-transform",
+  "version": "1.0.0",
+  "description": "Adobe Flavored Markdown transform",
+  "source": "src/afm.js",
+  "browser": "dist/afm.js",
+  "main": "dist/afm.cjs.js",
+  "module": "dist/afm.esm.js",
+  "types": "dist/afm.d.ts",
+  "scripts": {
+    "build": "rollup --config",
+    "test": "eslint *.js test/*.js && mocha test/*.js",
+    "types": "npx typescript src/*.js --declaration --allowJs --emitDeclarationOnly --outDir dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adobe-experience-league/adobe-afm-transform.git"
+  },
+  "keywords": [
+    "Adobe",
+    "flavored",
+    "markdown",
+    "AFM",
+    "transform"
+  ],
+  "author": "Jason Mulligan <jamullig@adobe.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/adobe-experience-league/adobe-afm-transform/issues"
+  },
+  "homepage": "https://github.com/adobe-experience-league/adobe-afm-transform#readme",
+  "devDependencies": {
+    "eslint": "^7.3.1",
+    "mocha": "^8.0.1",
+    "rollup": "^2.26.4",
+    "rollup-plugin-terser": "^7.0.0"
+  }
+}
