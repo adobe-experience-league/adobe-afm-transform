@@ -6,6 +6,8 @@ Adobe Flavored Markdown transform function for use within your toolchain.
 
 ### Usage
 #### ES Module
+Named export is `afm`.
+
 ```javascript
 import {afm} from 'adobe-afm-transform';
 ```
