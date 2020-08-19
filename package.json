@@ -1,6 +1,6 @@
 {
   "name": "adobe-afm-transform",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Adobe Flavored Markdown transform",
   "source": "src/afm.js",
   "browser": "dist/afm.js",

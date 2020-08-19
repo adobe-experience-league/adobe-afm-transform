@@ -24,7 +24,7 @@ const afm = require('adobe-afm-transform');
 
 ### Example
 ```js
-import {afm} from 'afm';
+import {afm} from 'adobe-afm-transform';
 const markdown = `# Sample
 
 >[!NOTE]
