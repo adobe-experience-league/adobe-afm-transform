@@ -41,7 +41,7 @@ The output would be:
 ```markdown
 # Sample
 
-<div class="extension note"><div>NOTE</div><div>This is an AFM note!</div></div>\n'
+<div class="extension note"><div>NOTE</div><div>This is an AFM note!</div></div>
 
 This is a paragraph.
 ```
