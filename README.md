@@ -20,7 +20,7 @@ const afm = require('adobe-afm-transform');
 ### Function parameters
 1. Markdown string to transform
 1. (Optional) CSS class to decorate, default is `extension`
-1. (Optional) Markdown compiler, default is passthru
+1. (Optional) Markdown compiler, default is passthru - *required* to support nested markdown
 
 ### Example
 ```js
