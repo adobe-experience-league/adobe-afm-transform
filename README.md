@@ -5,9 +5,9 @@ Adobe Flavored Markdown transform function for use within your toolchain.
 `npm install adobe-afm-transform`
 
 ### Usage
-#### ES Module
-Named export is `afm`.
+Named export is `afm`:
 
+#### ES Module
 ```javascript
 import {afm} from 'adobe-afm-transform';
 ```
