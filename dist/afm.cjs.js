@@ -1,5 +1,7 @@
 'use strict';
 
+Object.defineProperty(exports, '__esModule', { value: true });
+
 function afm (arg = '', klass = 'extension', compiler = x => x) {
   const skip = arg.match(/`{3,3}[^`]+`{3,3}(\n)?/g) || [],
     tmp = skip.reduce((a, v) => a.replace(v, ''), arg),
@@ -20,4 +22,4 @@ function afm (arg = '', klass = 'extension', compiler = x => x) {
   return result;
 }
 
-module.exports = afm;
+exports.afm = afm;

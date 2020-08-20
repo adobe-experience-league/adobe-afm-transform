@@ -1,13 +1,13 @@
 'use strict';
 
-export default function afm (arg = '', klass = 'extension', compiler = x => x) {
+export function afm (arg = '', klass = 'extension', compiler = x => x) {
   const skip = arg.match(/`{3,3}[^`]+`{3,3}(\n)?/g) || [],
     tmp = skip.reduce((a, v) => a.replace(v, ''), arg),
     exts = tmp.match(/(\s+|\t+)?\>\[\!.*\n((\s+|\t+)?\>[^\[].*\n?){1,}/g) || [];
   let result = arg;
 
   for (const ext of exts) {
-    const parts = ext.split('\n').filter(i => i.length > 0 && (/[^\s]+/).test(i)),
+    const parts = ext.split(/\n/).filter(i => i.length > 0 && (/[^\s]+/).test(i)),
       type = (parts[0].match(/\>\[\!(.*)\]/) || [])[1] || '',
       prefix = parts[0].replace(/\>\[.*/, ''),
       body = parts.slice(1, parts.length).map(i => i.replace(/^(\s+|\t+)?\>/, '')).filter((i, idx) => idx === 0 ? i.length > 0 : true).join('\n').trim();

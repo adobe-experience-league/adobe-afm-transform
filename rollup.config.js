@@ -7,7 +7,7 @@ export default [
       {
         file: 'dist/afm.cjs.js',
         format: 'cjs',
-        exports: 'default'
+        exports: 'named'
       },
       {
         file: 'dist/afm.esm.js',

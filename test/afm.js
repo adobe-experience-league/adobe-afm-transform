@@ -3,7 +3,7 @@
 const path = require('path'),
   assert = require('assert'),
   {readFileSync} = require('fs'),
-  afm = require(path.join(__dirname, '..', 'dist', 'afm.cjs.js')),
+  {afm} = require(path.join(__dirname, '..', 'dist', 'afm.cjs.js')),
   markdown = readFileSync(path.join(__dirname, 'markdown', 'afm.md'), 'utf8');
 
 describe('Adobe Flavored Markdown - afm()', function () {
