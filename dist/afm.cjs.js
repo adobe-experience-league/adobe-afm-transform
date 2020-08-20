@@ -2,7 +2,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-function afm (arg = '', klass = 'extension', compiler = x => x) {
+function afm (arg = '', klass = 'extension', compiler = (x = '') => x) {
   const win = arg.includes('\r'),
     eol = win ? '\r\n' : '\n',
     skip = arg.match(/`{3,3}[^`]+`{3,3}(\r?\n)?/g) || [],

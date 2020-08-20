@@ -1,6 +1,6 @@
 'use strict';
 
-export function afm (arg = '', klass = 'extension', compiler = x => x) {
+export function afm (arg = '', klass = 'extension', compiler = (x = '') => x) {
   const win = arg.includes('\r'),
     eol = win ? '\r\n' : '\n',
     skip = arg.match(/`{3,3}[^`]+`{3,3}(\r?\n)?/g) || [],
