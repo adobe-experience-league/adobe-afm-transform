@@ -17,7 +17,7 @@ export function afm (arg = '', klass = 'extension', compiler = (x = '') => x) {
     result = result.replace(parts.join(eol), `${prefix}<div class="${klass} ${type.toLowerCase().replace(/\s/g, '')}"><div>${type}</div><div>${compiler(body)}</div></div>${eol}`);
   }
 
-  result = result.replace(/(?<!```\n)\>\[\!VIDEO\]\((.*)\)/g, `<div class="${klass} video"><iframe allowfullscreen embedded-video src="$1" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"><source src="$1" type="" /><p>Your browser does not support the iframe element.</p></iframe></div>`);
+  result = result.replace(/(?<!```\n(\s+|\t+)?)\>\[\!VIDEO\]\((.*)\)/g, `<div class="${klass} video"><iframe allowfullscreen embedded-video src="$1" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"><source src="$1" type="" /><p>Your browser does not support the iframe element.</p></iframe></div>`);
 
   return result;
 }
