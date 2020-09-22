@@ -16,6 +16,10 @@ The process for deploying a Dispatcher is independent of the web server and the 
 
 1. [Configure AEM](/help/using/configuring/page-invalidate.md) so that content updates invalidate the cache.
 
+>[!WICHTIG]
+>
+>Localized admonition block of test
+
 >[!NOTE]
 >
 >To gain a better undestanding of how Dispatcher works with AEM see [Ask the AEM Community Experts for July 2017](https://bit.ly/ATACE0717).

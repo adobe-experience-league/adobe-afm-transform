@@ -7,7 +7,7 @@ const path = require('path'),
   markdown = readFileSync(path.join(__dirname, 'markdown', 'afm.md'), 'utf8');
 
 describe('Adobe Flavored Markdown - afm()', function () {
-  const result = afm(markdown);
+  const result = afm(markdown, void 0, void 0, {WICHTIG: 'IMPORTANT'});
 
   it('should return a string', function () {
     assert.strictEqual(typeof result, 'string');
@@ -19,5 +19,9 @@ describe('Adobe Flavored Markdown - afm()', function () {
 
   it('should not contain unprocessed tags', function () {
     assert.strictEqual(result.includes('>!NOTE'), false);
+  });
+
+  it('should not contain localized CSS class', function () {
+    assert.strictEqual(result.includes('hinweis'), false);
   });
 });
