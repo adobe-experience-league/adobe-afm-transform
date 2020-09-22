@@ -20,6 +20,10 @@ The process for deploying a Dispatcher is independent of the web server and the 
 >
 >Localized admonition block of test
 
+>[!MORELIKETHIS]
+>
+>Label rewrite
+
 >[!NOTE]
 >
 >To gain a better undestanding of how Dispatcher works with AEM see [Ask the AEM Community Experts for July 2017](https://bit.ly/ATACE0717).

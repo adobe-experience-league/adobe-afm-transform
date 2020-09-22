@@ -2,7 +2,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-function afm (arg = '', klass = 'extension', compiler = (x = '') => x, map = {}) {
+function afm (arg = '', klass = 'extension', compiler = (x = '') => x, map = {}, label = {}) {
   const win = arg.includes('\r'),
     eol = win ? '\r\n' : '\n',
     skip = arg.match(/`{3,3}[^`]+`{3,3}(\r?\n)?/g) || [],
@@ -19,7 +19,7 @@ function afm (arg = '', klass = 'extension', compiler = (x = '') => x, map = {})
       body = parts.slice(1, parts.length).map(i => i.replace(/^(\s+|\t+)?\>/, '')).filter((i, idx) => idx === 0 ? i.length > 0 : true).join(eol).trim(),
       ctype = (type in map ? map[type] : type).toLowerCase().replace(/\s/g, '');
 
-    result = result.replace(parts.join(eol), `${prefix}<div class="${klass} ${ctype}"><div>${type}</div><div>${compiler(body)}</div></div>${eol}`);
+    result = result.replace(parts.join(eol), `${prefix}<div class="${klass} ${ctype}"><div>${type in label ? label[type] : type}</div><div>${compiler(body)}</div></div>${eol}`);
   }
 
   result = result.replace(vid, `<div class="${klass} video"><iframe allowfullscreen embedded-video src="$2" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"><source src="$2" type="" /><p>Your browser does not support the iframe element.</p></iframe></div>`);
