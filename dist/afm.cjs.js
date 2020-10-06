@@ -17,8 +17,7 @@ function afm (arg = '', klass = 'extension', compiler = (x = '') => x, map = {},
       type = (parts[0].match(/\>\[\!(.*)\]/) || [])[1] || '',
       prefix = parts[0].replace(/\>\[.*/, ''),
       core = parts.slice(1, parts.length).map(i => i.replace(/^(\s+|\t+)?\>/, '').trim()).filter((i, idx) => idx === 0 ? i.length > 0 : true),
-      multi = core.length > 2,
-      body = core.map(i => compiler(i.trim())).join(multi ? `${eol}${prefix}` : eol),
+      body = core.map(i => compiler(i.trim())).join(`${eol}${prefix}`),
       ctype = (type in map ? map[type] : type).toLowerCase().replace(/\s/g, '');
 
     result = result.replace(parts.join(eol), `${prefix}<div class="${klass} ${ctype}">${eol}${prefix}<div>${type in label ? label[type] : type}</div>${eol}${prefix}<div>${eol}${prefix}${body}${eol}${prefix}</div>${eol}${prefix}</div>${eol}`);
