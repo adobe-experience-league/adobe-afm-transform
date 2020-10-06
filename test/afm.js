@@ -7,8 +7,19 @@ const path = require('path'),
   {afm} = require(path.join(__dirname, '..', 'dist', 'afm.cjs.js')),
   markdown = readFileSync(path.join(__dirname, 'markdown', 'afm.md'), 'utf8'),
   md = markdownit({html: true}),
-  html = [
-    `<ol>
+  html = `<ol>
+<li>
+<p>From the Activities list, click <strong>Create Activity</strong> &gt; <strong>A/B Test</strong>.</p>
+<p><img src="/help/assets/ab_select-new.png" alt="Create Activity drop-down list"></p>
+<div class="extension note">
+<div>NOTE</div>
+<div>
+<p>The available activity types depend on your Target account. Some activity types might not appear in your list. For example, Recommendations is a <a href="/help/using/introduction/intro.md#premium">Target Premium feature</a>.</p>
+<p>For information about the various activity types, see <a href="/help/using/activities/activities.md#concept_D317A95A1AB54674BA7AB65C7985BA03">Activities</a> and the <a href="/help/using/activities/target-activities-guide.md">Target activities guide</a>.</p>
+</div>
+</div>
+<p><img src="/help/assets/create-ab.png" alt="Create A/B Test Actity"></p>
+</li>
 <li>
 <p>Learn about Dispatcher (this page). Also, see <a href="https://helpx.adobe.com/experience-manager/using/dispatcher-faq.html">frequently asked questions about dispatcher</a>.</p>
 </li>
@@ -30,24 +41,7 @@ const path = require('path'),
 <li>
 <p><a href="/help/using/configuring/page-invalidate.md">Configure AEM</a> so that content updates invalidate the cache.</p>
 </li>
-</ol>`,
-    `<ol>
-<li>
-<p>From the Activities list, click <strong>Create Activity</strong> &gt; <strong>A/B Test</strong>.</p>
-<p><img src="/help/assets/ab_select-new.png" alt="Create Activity drop-down list"></p>
-<div class="extension note">
-<div>NOTE</div>
-<div>
-<p>The available activity types depend on your Target account. Some activity types might not appear in your list. For example, Recommendations is a <a href="/help/using/introduction/intro.md#premium">Target Premium feature</a>.</p>
-<p>For information about the various activity types, see <a href="/help/using/activities/activities.md#concept_D317A95A1AB54674BA7AB65C7985BA03">Activities</a> and the <a href="/help/using/activities/target-activities-guide.md">Target activities guide</a>.</p>
-   </div>
-   </div>
-<p><img src="/help/assets/create-ab.png" alt="Create A/B Test Actity"></p>
-</li>
-<li>
-<p>Learn about Dispatcher (this page). Also, see <a href="https://helpx.adobe.com/experience-manager/using/dispatcher-faq.html">frequently asked questions about dispatcher</a>.</p>
-</li>`
-  ];
+</ol>`;
 
 describe('Adobe Flavored Markdown - afm()', function () {
   const result = afm(markdown, void 0, void 0, {WICHTIG: 'IMPORTANT'}, {MORELIKETHIS: 'Related Articles'});
@@ -79,11 +73,7 @@ describe('markdown-it interoperability', function () {
   const result = afm(markdown, void 0, arg => md.render(arg), {WICHTIG: 'IMPORTANT'}, {MORELIKETHIS: 'Related Articles'}),
     compiled = md.render(result);
 
-  it('1 line admonitions should work with markdown-it "out of the box"', function () {
-    assert.strictEqual(compiled.includes(html[0]), true);
-  });
-
-  it('2+ line admonitions should work with markdown-it "out of the box"', function () {
-    assert.strictEqual(compiled.includes(html[1]), true);
+  it('Admonitions should work with markdown-it "out of the box"', function () {
+    assert.strictEqual(compiled.includes(html), true);
   });
 });
