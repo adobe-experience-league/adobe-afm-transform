@@ -8,6 +8,18 @@ Dispatcher is Adobe Experience Manager's caching and/or load balancing tool. Usi
 
 The process for deploying a Dispatcher is independent of the web server and the OS platform chosen:
 
+1. From the Activities list, click **Create Activity** > **A/B Test**.
+
+   ![Create Activity drop-down list](/help/assets/ab_select-new.png)
+
+   >[!NOTE]
+   >
+   >The available activity types depend on your Target account. Some activity types might not appear in your list. For example, Recommendations is a [Target Premium feature](/help/using/introduction/intro.md#premium).
+   >
+   >For information about the various activity types, see [Activities](/help/using/activities/activities.md#concept_D317A95A1AB54674BA7AB65C7985BA03) and the [Target activities guide](/help/using/activities/target-activities-guide.md).
+
+   ![Create A/B Test Actity](/help/assets/create-ab.png)
+
 1. Learn about Dispatcher (this page). Also, see [frequently asked questions about dispatcher](https://helpx.adobe.com/experience-manager/using/dispatcher-faq.html).
 1. Install a [supported web server](https://helpx.adobe.com/experience-manager/6-3/sites/deploying/using/technical-requirements.html) according to the web server documentation.  
 
