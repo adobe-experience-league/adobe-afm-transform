@@ -39,7 +39,7 @@ This is a paragraph.
 afm(markdown);
 ```
 
-The output would be (:
+The output would be:
 ```markdown
 # Sample
 
