@@ -39,11 +39,16 @@ This is a paragraph.
 afm(markdown);
 ```
 
-The output would be:
+The output would be (:
 ```markdown
 # Sample
 
-<div class="extension note"><div>NOTE</div><div>This is an AFM note!</div></div>
+<div class="extension note">
+<div>NOTE</div>
+<div>
+This is an AFM note!
+</div>
+</div>
 
 This is a paragraph.
 ```
