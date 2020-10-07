@@ -14,11 +14,12 @@ export function afm (arg = '', klass = 'extension', compiler = (x = '') => x, ma
     const parts = ext.split(win ? /\r\n/ : /\n/).filter(i => i.length > 0 && (/[^\s]+/).test(i)),
       type = (parts[0].match(/\>\[\!(.*)\]/) || [])[1] || '',
       prefix = parts[0].replace(/\>\[.*/, ''),
-      core = parts.slice(1, parts.length).map(i => i.replace(/^(\s+|\t+)?\>/, '').trim()).filter((i, idx) => idx === 0 ? i.length > 0 : true),
-      body = core.map(i => compiler(i.trim())).join(`${eol}${prefix}`),
+      nl = `${eol}${prefix}`,
+      core = parts.slice(1, parts.length).map(i => i.replace(/^(\s+|\t+)?\>/, '').trim()).filter((i, idx) => idx === 0 ? i.length > 0 : true).join(eol).trim(),
+      body = compiler(core).split(eol).map(i => `${prefix}${i}`).join(eol),
       ctype = (type in map ? map[type] : type).toLowerCase().replace(/\s/g, '');
 
-    result = result.replace(parts.join(eol), `${prefix}<div class="${klass} ${ctype}">${eol}${prefix}<div>${type in label ? label[type] : type}</div>${eol}${prefix}<div>${eol}${prefix}${body}${eol}${prefix}</div>${eol}${prefix}</div>${eol}`);
+    result = result.replace(parts.join(eol), `${prefix}<div class="${klass} ${ctype}">${nl}<div>${type in label ? label[type] : type}</div>${nl}<div>${eol}${body}${nl}</div>${nl}</div>${eol}`);
   }
 
   result = result.replace(vid, `<div class="${klass} video"><iframe allowfullscreen embedded-video src="$2" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"><source src="$2" type="" /><p>Your browser does not support the iframe element.</p></iframe></div>`);
