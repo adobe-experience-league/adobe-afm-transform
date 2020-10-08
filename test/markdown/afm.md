@@ -354,4 +354,4 @@ A Dispatcher can be used in front of an author instance to improve authoring per
    > P:groupable [Boolean] = true
    >```
 
-                                                                                                                                                Fin.                                                                                                                                    >
+Fin.
