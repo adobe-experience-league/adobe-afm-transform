@@ -70,7 +70,7 @@ describe('Adobe Flavored Markdown - afm()', function () {
 });
 
 describe('markdown-it interoperability', function () {
-  const result = afm(markdown, void 0, arg => md.render(arg), {WICHTIG: 'IMPORTANT'}, {MORELIKETHIS: 'Related Articles'}),
+  const result = afm(markdown, void 0, arg => md.render(arg)),
     compiled = md.render(result);
 
   it('Admonitions should work with markdown-it "out of the box"', function () {
