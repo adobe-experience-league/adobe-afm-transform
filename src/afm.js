@@ -3,7 +3,7 @@
 export function afm (arg = '', klass = 'extension', compiler = (x = '') => x, map = {}, label = {}) {
   const win = arg.includes('\r'),
     eol = win ? '\r\n' : '\n',
-    skip = arg.match(/`{3,3}[^`]+`{3,3}(\r?\n)?/g) || [],
+    skip = arg.match(/[^>]\s*?`{3,3}[^`]+`{3,3}(\r?\n)?/g) || [],
     tmp = skip.reduce((a, v) => a.replace(v, ''), arg),
     exts = tmp.match(/(\s+|\t+)?\>\[\!.*\r?\n((\s+|\t+)?\>[^\[].*\r?\n?){1,}/g) || [],
     lvid = Object.keys(map).filter(i => map[i] === 'VIDEO')[0] || 'VIDEO',

@@ -339,3 +339,19 @@ A Dispatcher can be used in front of an author instance to improve authoring per
 >A related knowledge base article can be found here:  
 >[How to configure the dispatcher in front of an authoring environment](https://helpx.adobe.com/cq/kb/HowToConfigureDispatcherForAuthoringEnvironment.html)
 -->
+
+1. Nested AFM tag
+1. Drag a component (for this example, **Bundle** in the **OSGi Report** group) from the sidekick to create the first column and [start the report definition](/docs/experience-manager-64/administering/operations/reporting.html?lang=en#the-basics-of-report-customization).
+
+   >[!NOTE]
+   >
+   >As this example does not have any groupable columns the charts will not be available. To see charts, set `groupable` to `true`: 
+   >
+   >``` 
+   >N:osgireport [sling:Folder]
+   > N:bundlecol [cq:Component]
+   > N:definitions [nt:unstructured]
+   > P:groupable [Boolean] = true
+   >```
+
+                                                                                                                                                Fin.                                                                                                                                    >
