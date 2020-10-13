@@ -354,4 +354,10 @@ A Dispatcher can be used in front of an author instance to improve authoring per
    > P:groupable [Boolean] = true
    >```
 
+**Nested anchor on new line**
+>[!NOTE]
+>
+>Following tutorial might be of interest for starting a new AEM project:  
+>[Getting Started with AEM Sites Part 1 - Project Setup](https://helpx.adobe.com/experience-manager/kt/sites/using/getting-started-wknd-tutorial-develop/part1.html)
+
 Fin.
