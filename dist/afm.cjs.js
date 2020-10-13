@@ -7,7 +7,7 @@ function afm (arg = '', klass = 'extension', compiler = (x = '') => x, map = {},
     eol = win ? '\r\n' : '\n',
     skip = arg.match(/[^>]\s*?`{3,3}[^`]+`{3,3}(\r?\n)?/g) || [],
     tmp = skip.reduce((a, v) => a.replace(v, ''), arg),
-    exts = tmp.match(/(\s+|\t+)?\>\[\!.*\r?\n((\s+|\t+)?\>[^\[].*\r?\n?){1,}/g) || [],
+    exts = tmp.match(/(\s+|\t+)?\>\[\!.*\r?\n((\s+|\t+)?\>(?!\[\!).*\r?\n?){1,}/g) || [],
     lvid = Object.keys(map).filter(i => map[i] === 'VIDEO')[0] || 'VIDEO',
     vid = new RegExp(`(?<!\`\`\`\\r?\\n(\\s+|\\t+)?)\\>\\[\\!${lvid}\\]\\((.*)\\)`, 'g');
   let result = arg;
