@@ -12,12 +12,12 @@ function afm (arg = '', klass = 'extension', compiler = (x = '') => x, map = {},
     skip = arg.match(/[^>]\s*?`{3,3}[^`]+`{3,3}(\r?\n)?/g) || [],
     ents = Array.from(new Set(arg.match(/\&#\w+;/g) || [])),
     escaped = ents.map(i => escape(i)),
-    stmp = skip.reduce((a, v) => a.replace(v, ''), arg),
-    tmp = ents.reduce((a, v) => a.replace(v, escape(v)), stmp),
-    exts = tmp.match(/(\s+|\t+)?\>\[\!.*\r?\n((\s+|\t+)?\>(?!\[\!).*\r?\n?){1,}/g) || [],
+    stmp = skip.reduce((a, v) => a.replace(v, ''), arg.toString()),
+    tmp = ents.reduce((a, v) => a.replace(new RegExp(lescape(v), 'g'), escape(v)), stmp),
+    exts = tmp.match(/(?!\n)(\s+|\t+)?\>\[\!.*\r?\n((\s+|\t+)?\>(?!\[\!).*\r?\n?){1,}/g) || [],
     lvid = Object.keys(map).filter(i => map[i] === 'VIDEO')[0] || 'VIDEO',
     vid = new RegExp(`(?<!\`\`\`\\r?\\n(\\s+|\\t+)?)\\>\\[\\!${lvid}\\]\\((.*)\\)`, 'g');
-  let result = arg;
+  let result = arg.toString();
 
   for (const ext of exts) {
     const parts = ext.split(win ? /\r\n/ : /\n/).filter(i => i.length > 0 && (/[^\s]+/).test(i)),
