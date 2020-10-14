@@ -54,10 +54,6 @@ function afm (arg = '', klass = 'extension', compiler = (x = '') => x, map = {},
 
   result = result.replace(vid, `<div class="${klass} video"><iframe allowfullscreen embedded-video src="$2" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"><source src="$2" type="" /><p>Your browser does not support the iframe element.</p></iframe></div>`);
 
-  for (const earg of escaped) {
-    result = result.replace(new RegExp(lescape(earg), 'g'), unescape(earg));
-  }
-
   return result.trim();
 }
 
