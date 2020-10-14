@@ -89,4 +89,8 @@ describe('markdown-it interoperability', function () {
   it('should not contain unprocessed tags', function () {
     assert.strictEqual(compiled.includes(unprocessedHTML), false);
   });
+
+  it('should not contain escaped HTML entities', function () {
+    assert.strictEqual(compiled.includes('%26%2339%3B'), false);
+  });
 });
