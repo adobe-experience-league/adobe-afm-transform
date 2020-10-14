@@ -44,7 +44,9 @@ const path = require('path'),
 </ol>`,
   invalidHTML = `<blockquote>
 <p><a href="https://helpx.adobe.com/experience-manager/kt/sites/using/getting-started-wknd-tutorial-develop/part1.html">Getting Started with AEM Sites Part 1 - Project Setup</a></p>
-</blockquote>`;
+</blockquote>`,
+  unprocessedHTML = `<blockquote>
+<p>[!NOTE]</p>`;
 
 describe('Adobe Flavored Markdown - afm()', function () {
   const result = afm(markdown, void 0, void 0, {WICHTIG: 'IMPORTANT'}, {MORELIKETHIS: 'Related Articles'});
@@ -82,5 +84,9 @@ describe('markdown-it interoperability', function () {
 
   it('Admonitions with anchors at beginning of new lines should work "out of the box"', function () {
     assert.strictEqual(compiled.includes(invalidHTML), false);
+  });
+
+  it('should not contain unprocessed tags', function () {
+    assert.strictEqual(compiled.includes(unprocessedHTML), false);
   });
 });

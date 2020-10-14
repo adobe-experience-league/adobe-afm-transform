@@ -360,4 +360,13 @@ A Dispatcher can be used in front of an author instance to improve authoring per
 >Following tutorial might be of interest for starting a new AEM project:  
 >[Getting Started with AEM Sites Part 1 - Project Setup](https://helpx.adobe.com/experience-manager/kt/sites/using/getting-started-wknd-tutorial-develop/part1.html)
 
+**HTML entities**
+>[!NOTE]
+>
+>&#39;$&#39; no es un carácter reservado; de lo contrario, puede ocurrir en la solicitud. Por ejemplo, `src=my$image$file.tif` es un comando válido (suponiendo que existe una entrada de catálogo o un archivo de imagen con el nombre `my$image$file.tif` ), mientras que `wid=$number$` no lo es, porque `wid` requiere un argumento numérico.
+
+>[!NOTE]
+>
+>*`profile`* no pueden incluir caracteres &#39;,&#39;, aunque estén codificados en HTTP.
+
 Fin.
