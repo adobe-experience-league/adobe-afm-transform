@@ -36,9 +36,20 @@ function afm (arg = '', klass = 'extension', compiler = (x = '') => x, map = {},
         return result;
       }).filter((i, idx) => idx === 0 ? i.length > 0 : true).join(eol).trim(),
       body = compiler(core).split(eol).map(i => `${prefix}${i}`).join(eol),
-      ctype = (type in map ? map[type] : type).toLowerCase().replace(/\s/g, '');
+      ctype = (type in map ? map[type] : type).toLowerCase().replace(/\s/g, ''),
+      og = parts.map(i => {
+        let result = i;
 
-    result = result.replace(parts.join(eol), `${prefix}<div class="${klass} ${ctype}">${nl}<div>${type in label ? label[type] : type}</div>${nl}<div>${eol}${body}${nl}</div>${nl}</div>${eol}`);
+        for (const ent of escaped) {
+          if (result.includes(ent)) {
+            result = result.replace(new RegExp(lescape(ent), 'g'), unescape(ent));
+          }
+        }
+
+        return result;
+      }).join(eol);
+
+    result = result.replace(og, `${prefix}<div class="${klass} ${ctype}">${nl}<div>${type in label ? label[type] : type}</div>${nl}<div>${eol}${body}${nl}</div>${nl}</div>${eol}`);
   }
 
   result = result.replace(vid, `<div class="${klass} video"><iframe allowfullscreen embedded-video src="$2" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"><source src="$2" type="" /><p>Your browser does not support the iframe element.</p></iframe></div>`);
