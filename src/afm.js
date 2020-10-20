@@ -5,8 +5,7 @@ function lescape (arg) {
 }
 
 export function afm (arg = '', klass = 'extension', compiler = (x = '') => x, map = {}, label = {}) {
-  const win = arg.includes('\r'),
-    eol = win ? '\r\n' : '\n',
+  const eol = arg.includes('\r') ? '\r\n' : '\n',
     skip = arg.match(/[^>]\s*?`{3,3}[^`]+`{3,3}(\r?\n)?/g) || [],
     ents = Array.from(new Set(arg.match(/\&#\w+;/g) || [])),
     escaped = ents.map(i => escape(i)),
@@ -18,7 +17,7 @@ export function afm (arg = '', klass = 'extension', compiler = (x = '') => x, ma
   let result = arg.toString();
 
   for (const ext of exts) {
-    const parts = ext.split(win ? /\r\n/ : /\n/).filter(i => i.length > 0 && (/[^\s]+/).test(i)),
+    const parts = ext.split(/\r?\n/).filter(i => i.length > 0 && (/[^\s]+/).test(i)),
       type = (parts[0].match(/\>\[\!(.*)\]/) || [])[1] || '',
       prefix = parts[0].replace(/\>\[.*/, ''),
       nl = `${eol}${prefix}`,
@@ -33,7 +32,7 @@ export function afm (arg = '', klass = 'extension', compiler = (x = '') => x, ma
 
         return iresult;
       }).filter((i, idx) => idx === 0 ? i.length > 0 : true).join(eol).trim(),
-      body = compiler(core).split(eol).map(i => `${prefix}${i}`).join(eol),
+      body = `${prefix}${compiler(core).split(/\r?\n/).join(nl)}`,
       ctype = (type in map ? map[type] : type).toLowerCase().replace(/\s/g, ''),
       og = parts.map(i => {
         let iresult = i;
