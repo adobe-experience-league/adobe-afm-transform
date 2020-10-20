@@ -25,28 +25,28 @@ function afm (arg = '', klass = 'extension', compiler = (x = '') => x, map = {},
       prefix = parts[0].replace(/\>\[.*/, ''),
       nl = `${eol}${prefix}`,
       core = parts.slice(1, parts.length).map(i => {
-        let result = i.replace(/^(\s+|\t+)?\>/, '').trim();
+        let iresult = i.replace(/^(\s+|\t+)?\>/, '').trim();
 
         for (const ent of ents) {
-          if (result.includes(ent)) {
-            result = result.replace(new RegExp(lescape(ent), 'g'), escape(ent));
+          if (iresult.includes(ent)) {
+            iresult = iresult.replace(new RegExp(lescape(ent), 'g'), escape(ent));
           }
         }
 
-        return result;
+        return iresult;
       }).filter((i, idx) => idx === 0 ? i.length > 0 : true).join(eol).trim(),
       body = compiler(core).split(eol).map(i => `${prefix}${i}`).join(eol),
       ctype = (type in map ? map[type] : type).toLowerCase().replace(/\s/g, ''),
       og = parts.map(i => {
-        let result = i;
+        let iresult = i;
 
         for (const ent of escaped) {
-          if (result.includes(ent)) {
-            result = result.replace(new RegExp(lescape(ent), 'g'), unescape(ent));
+          if (iresult.includes(ent)) {
+            iresult = iresult.replace(new RegExp(lescape(ent), 'g'), unescape(ent));
           }
         }
 
-        return result;
+        return iresult;
       }).join(eol);
 
     result = result.replace(og, `${prefix}<div class="${klass} ${ctype}">${nl}<div>${type in label ? label[type] : type}</div>${nl}<div>${eol}${body}${nl}</div>${nl}</div>${eol}`);
