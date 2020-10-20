@@ -14,7 +14,7 @@ function afm (arg = '', klass = 'extension', compiler = (x = '') => x, map = {},
     escaped = ents.map(i => escape(i)),
     stmp = skip.reduce((a, v) => a.replace(v, ''), arg.toString()),
     tmp = ents.reduce((a, v) => a.replace(new RegExp(lescape(v), 'g'), escape(v)), stmp),
-    exts = tmp.match(/(?!\n)(\s+|\t+)?\>\[\!.*\r?\n((\s+|\t+)?\>(?!\[\!).*\r?\n?){1,}/g) || [],
+    exts = tmp.match(/(?!\r?\n)(\s+|\t+)?\>\[\!.*\r?\n((\s+|\t+)?\>(?!\[\!).*\r?\n?){1,}/g) || [],
     lvid = Object.keys(map).filter(i => map[i] === 'VIDEO')[0] || 'VIDEO',
     vid = new RegExp(`(?<!\`\`\`\\r?\\n(\\s+|\\t+)?)\\>\\[\\!${lvid}\\]\\((.*)\\)`, 'g');
   let result = arg.toString();
@@ -49,7 +49,7 @@ function afm (arg = '', klass = 'extension', compiler = (x = '') => x, map = {},
         return iresult;
       }).join(eol);
 
-    result = result.replace(og, `${prefix}<div class="${klass} ${ctype}">${nl}<div>${type in label ? label[type] : type}</div>${nl}<div>${eol}${body}${nl}</div>${nl}</div>${eol}`);
+    result = result.replace(og, `${prefix}<div class="${klass} ${ctype}">${nl}<div>${type in label ? label[type] : type}</div>${nl}<div>${eol}${body.replace(/\r?\n$/, '')}${nl}</div>${nl}</div>`);
   }
 
   result = result.replace(vid, `<div class="${klass} video"><iframe allowfullscreen embedded-video src="$2" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"><source src="$2" type="" /><p>Your browser does not support the iframe element.</p></iframe></div>`);
