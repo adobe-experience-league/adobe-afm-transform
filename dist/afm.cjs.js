@@ -8,7 +8,7 @@ function lescape (arg) {
 
 function afm (arg = '', klass = 'extension', compiler = (x = '') => x, map = {}, label = {}) {
   const eol = arg.includes('\r') ? '\r\n' : '\n',
-    skip = arg.match(/(?<!\>\s*)\/?```[^\/?```]+\/?```/g) || [],
+    skip = arg.match(/(?<!\\|\>\s*)```[^```]+\\?```(\r?\n)?/g) || [],
     ents = Array.from(new Set(arg.match(/\&#\w+;/g) || [])),
     escaped = ents.map(i => escape(i)),
     stmp = skip.reduce((a, v) => a.replace(v, ''), arg.toString()),
