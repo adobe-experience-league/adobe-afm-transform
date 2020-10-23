@@ -2,21 +2,25 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+function clone (arg) {
+  return JSON.parse(JSON.stringify(arg));
+}
+
 function lescape (arg) {
   return arg.replace(/[\-\[\]{}()*+?.,\\\^\$|#]/g, '\\$&');
 }
 
 function afm (arg = '', klass = 'extension', compiler = (x = '') => x, map = {}, label = {}) {
   const eol = arg.includes('\r') ? '\r\n' : '\n',
-    skip = arg.match(/[^>]\s*?`{3,3}[^`]+`{3,3}(\r?\n)?/g) || [],
+    skip = arg.match(/(?<!\\|\>\s*)```[^```]+\\?```(\r?\n)?/g) || [],
     ents = Array.from(new Set(arg.match(/\&#\w+;/g) || [])),
     escaped = ents.map(i => escape(i)),
-    stmp = skip.reduce((a, v) => a.replace(v, ''), arg.toString()),
+    stmp = skip.reduce((a, v) => a.replace(v, ''), clone(arg)),
     tmp = ents.reduce((a, v) => a.replace(new RegExp(lescape(v), 'g'), escape(v)), stmp),
     exts = tmp.match(/(?!\r?\n)(\s+|\t+)?\>\[\!.*\r?\n((\s+|\t+)?\>(?!\[\!).*\r?\n?){1,}/g) || [],
     lvid = Object.keys(map).filter(i => map[i] === 'VIDEO')[0] || 'VIDEO',
     vid = new RegExp(`(?<!\`\`\`\\r?\\n(\\s+|\\t+)?)\\>\\[\\!${lvid}\\]\\((.*)\\)`, 'g');
-  let result = arg.toString();
+  let result = clone(arg);
 
   for (const ext of exts) {
     const parts = ext.split(/\r?\n/).filter(i => i.length > 0 && (/[^\s]+/).test(i)),
@@ -47,8 +51,30 @@ function afm (arg = '', klass = 'extension', compiler = (x = '') => x, map = {},
 
         return iresult;
       }).join(eol);
+    let lidx = result.indexOf(og);
 
-    result = result.replace(og, `${prefix}<div class="${klass} ${ctype}">${nl}<div>${type in label ? label[type] : type}</div>${nl}<div>${eol}${body.replace(/\r?\n$/, '')}${nl}</div>${nl}</div>`);
+    if (skip.length > 0) {
+      let lpos = 0;
+      const matches = skip.filter(i => i.includes(og)).map(i => { // eslint-disable-line no-loop-func
+        const x = result.indexOf(i, lpos),
+          y = i.indexOf(og),
+          z = x + y;
+
+        if (z > lpos) {
+          lpos = z;
+        }
+
+        return z;
+      });
+
+      if (matches.includes(lidx)) {
+        while (matches.includes(lidx)) {
+          lidx = result.indexOf(og, lidx + 1);
+        }
+      }
+    }
+
+    result = `${result.slice(0, lidx)}${prefix}<div class="${klass} ${ctype}">${nl}<div>${type in label ? label[type] : type}</div>${nl}<div>${eol}${body.replace(/\r?\n$/, '')}${nl}</div>${nl}</div>${nl}${result.slice(lidx + og.length)}`;
   }
 
   result = result.replace(vid, `<div class="${klass} video"><iframe allowfullscreen embedded-video src="$2" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"><source src="$2" type="" /><p>Your browser does not support the iframe element.</p></iframe></div>`);

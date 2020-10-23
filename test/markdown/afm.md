@@ -305,6 +305,12 @@ For finer-grained control, API based invalidation allows you to invalidate a CDN
 }
 ```
 
+```
+>[!INFO]
+>
+>This should be skipped.
+```
+
 A Dispatcher can be used in front of an author instance to improve authoring performance. To configure an authoring Dispatcher, do the following:
 
 1. Install a Dispatcher in a web server (this could be Apache or IIS web server, see [Installing Dispatcher](/help/using/getting-started/dispatcher-install.md)).
