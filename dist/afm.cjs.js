@@ -50,8 +50,29 @@ function afm (arg = '', klass = 'extension', compiler = (x = '') => x, map = {},
         }
 
         return iresult;
-      }).join(eol),
-      lidx = result.lastIndexOf(og);
+      }).join(eol);
+    let lidx = result.indexOf(og);
+
+    if (skip.length > 0) {
+      let lpos = 0;
+      const matches = skip.filter(i => i.includes(og)).map(i => { // eslint-disable-line no-loop-func
+        const x = result.indexOf(i, lpos),
+          y = i.indexOf(og),
+          z = x + y;
+
+        if (z > lpos) {
+          lpos = z;
+        }
+
+        return z;
+      });
+
+      if (matches.includes(lidx)) {
+        while (matches.includes(lidx)) {
+          lidx = result.indexOf(og, lidx + 1);
+        }
+      }
+    }
 
     result = `${result.slice(0, lidx)}${prefix}<div class="${klass} ${ctype}">${nl}<div>${type in label ? label[type] : type}</div>${nl}<div>${eol}${body.replace(/\r?\n$/, '')}${nl}</div>${nl}</div>${nl}${result.slice(lidx + og.length)}`;
   }
