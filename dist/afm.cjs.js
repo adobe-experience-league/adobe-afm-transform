@@ -2,6 +2,10 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+function clone (arg) {
+  return JSON.parse(JSON.stringify(arg));
+}
+
 function lescape (arg) {
   return arg.replace(/[\-\[\]{}()*+?.,\\\^\$|#]/g, '\\$&');
 }
@@ -11,12 +15,12 @@ function afm (arg = '', klass = 'extension', compiler = (x = '') => x, map = {},
     skip = arg.match(/(?<!\\|\>\s*)```[^```]+\\?```(\r?\n)?/g) || [],
     ents = Array.from(new Set(arg.match(/\&#\w+;/g) || [])),
     escaped = ents.map(i => escape(i)),
-    stmp = skip.reduce((a, v) => a.replace(v, ''), arg.toString()),
+    stmp = skip.reduce((a, v) => a.replace(v, ''), clone(arg)),
     tmp = ents.reduce((a, v) => a.replace(new RegExp(lescape(v), 'g'), escape(v)), stmp),
     exts = tmp.match(/(?!\r?\n)(\s+|\t+)?\>\[\!.*\r?\n((\s+|\t+)?\>(?!\[\!).*\r?\n?){1,}/g) || [],
     lvid = Object.keys(map).filter(i => map[i] === 'VIDEO')[0] || 'VIDEO',
     vid = new RegExp(`(?<!\`\`\`\\r?\\n(\\s+|\\t+)?)\\>\\[\\!${lvid}\\]\\((.*)\\)`, 'g');
-  let result = arg.toString();
+  let result = clone(arg);
 
   for (const ext of exts) {
     const parts = ext.split(/\r?\n/).filter(i => i.length > 0 && (/[^\s]+/).test(i)),
