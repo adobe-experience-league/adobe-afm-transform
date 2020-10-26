@@ -41,7 +41,7 @@ export function afm (arg = '', klass = 'extension', compiler = (x = '') => x, ma
     tmp = ents.reduce((a, v) => a.replace(new RegExp(lescape(v), 'g'), escape(v)), stmp),
     exts = tmp.match(/(?!\r?\n)(\s+|\t+)?\>\[\!.*\r?\n((\s+|\t+)?\>(?!\[\!).*\r?\n?){1,}/g) || [],
     lvid = Object.keys(map).filter(i => map[i] === 'VIDEO')[0] || 'VIDEO',
-    vids = arg.match(new RegExp(`(?<!\`\`\`\\r?\\n(\\s+|\\t+)?)\\>\\[\\!${lvid}\\]\\((.*)\\)`, 'g')) || [];
+    vids = arg.match(new RegExp(`(?!\\r?\\n)(\\s+|\\t+)?\\>\\[\\!${lvid}\\]\\((.*)\\)`, 'g')) || [];
   let result = clone(arg);
 
   for (const ext of exts) {
