@@ -85,13 +85,14 @@ function afm (arg = '', klass = 'extension', compiler = (x = '') => x, map = {},
   }
 
   for (const vid of vids) {
+    const lurl = vid.replace(/^.*\(|\).*$/g, '');
     let lidx = result.indexOf(vid);
 
     if (skip.length > 0) {
       lidx = pos(vid, result, skip, lidx);
     }
 
-    result = `${result.slice(0, lidx)}<div class="${klass} video"><iframe allowfullscreen embedded-video src="$2" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"><source src="$2" type="" /><p>Your browser does not support the iframe element.</p></iframe></div>${result.slice(lidx + vid.length)}`;
+    result = `${result.slice(0, lidx)}<div class="${klass} video"><iframe allowfullscreen embedded-video src="${lurl}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"><source src="${lurl}" type="" /><p>Your browser does not support the iframe element.</p></iframe></div>${result.slice(lidx + vid.length)}`;
   }
 
   for (const earg of escaped) {
