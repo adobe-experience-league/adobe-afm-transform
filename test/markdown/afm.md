@@ -375,4 +375,14 @@ A Dispatcher can be used in front of an author instance to improve authoring per
 >
 >*`profile`* no pueden incluir caracteres &#39;,&#39;, aunque estén codificados en HTTP.
 
+### Video
+
+The video extension allows the video to be played on the page. You can also create a standard link to the video. 
+
+```markdown
+>[!VIDEO](https://video.tv.adobe.com/v/17187/)
+```
+
+>[!VIDEO](https://video.tv.adobe.com/v/17187/)
+
 Fin.
