@@ -36,10 +36,11 @@ function pos (arg = '', source = '', skip = [], idx = 0) {
 
 function afm (arg = '', klass = 'extension', compiler = (x = '') => x, map = {}, label = {}) {
   const eol = arg.includes('\r') ? '\r\n' : '\n',
-    skip = arg.match(/(?<!\\|\>\s*)```[^```]+\\?```(\r?\n)?/g) || [],
     ents = Array.from(new Set(arg.match(/\&#\w+;/g) || [])),
     escaped = ents.map(i => escape(i)),
-    stmp = skip.reduce((a, v) => a.replace(v, ''), clone(arg)),
+    sections = arg.split(/(?<!`)`{3,3}(?!`)/g),
+    skip = sections.filter((i, idx) => idx % 2 === 1).map(i => `\`\`\`${eol}${i}${eol}\`\`\``),
+    stmp = sections.filter((i, idx) => idx % 2 === 0).join(eol),
     tmp = ents.reduce((a, v) => a.replace(new RegExp(lescape(v), 'g'), escape(v)), stmp),
     exts = tmp.match(/(?!\r?\n)(\s+|\t+)?\>\[\!.*\r?\n((\s+|\t+)?\>(?!\[\!).*\r?\n?){1,}/g) || [],
     lvid = Object.keys(map).filter(i => map[i] === 'VIDEO')[0] || 'VIDEO',
