@@ -36,7 +36,7 @@ export function afm (arg = '', klass = 'extension', compiler = (x = '') => x, ma
   const eol = arg.includes('\r') ? '\r\n' : '\n',
     ents = Array.from(new Set(arg.match(/\&#\w+;/g) || [])),
     escaped = ents.map(i => escape(i)),
-    sections = arg.split(/(?<!`|>\s{1,}?)`{3,3}(?!`)/g),
+    sections = arg.split(/(?<!`|>\s{0,}?)`{3,3}(?!`)/g),
     skip = sections.filter((i, idx) => idx % 2 === 1).map(i => `\`\`\`${i.startsWith(eol) ? '' : eol}${i}${i.endsWith(eol) ? '' : eol}\`\`\``),
     stmp = sections.filter((i, idx) => idx % 2 === 0).map(i => i.replace(/(^[\r?\n]+|[\r?\n]+$)/g, '')).join(eol),
     tmp = ents.reduce((a, v) => a.replace(new RegExp(lescape(v), 'g'), escape(v)), stmp),
