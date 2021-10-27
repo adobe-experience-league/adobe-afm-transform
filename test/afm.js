@@ -9,6 +9,10 @@ const path = require('path'),
   md = markdownit({html: true}),
   html = `<ol>
 <li>
+<p>New paragraphs!</p>
+<p>Madness!</p>
+</li>
+<li>
 <p>From the Activities list, click <strong>Create Activity</strong> &gt; <strong>A/B Test</strong>.</p>
 <p><img src="/help/assets/ab_select-new.png" alt="Create Activity drop-down list"></p>
 <div class="extension note">
@@ -71,6 +75,10 @@ describe('Adobe Flavored Markdown - afm()', function () {
     assert.strictEqual(result.includes('Related Articles'), true);
     assert.strictEqual(result.includes('relatedarticles'), false);
     assert.strictEqual(result.includes('morelikethis'), true);
+  });
+
+  it('should not change list formatting', function () {
+    assert.strictEqual(result.includes('   Madness!'), true);
   });
 });
 

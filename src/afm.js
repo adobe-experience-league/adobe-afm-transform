@@ -51,7 +51,7 @@ export function afm (arg = '', klass = 'extension', compiler = (x = '') => x, ma
       prefix = parts[0].replace(/\>\[.*/, ''),
       nl = `${eol}${prefix}`,
       core = parts.slice(1, parts.length).map(i => {
-        let iresult = i.replace(/^(\s+|\t+)?\>/, '').trim();
+        let iresult = i.replace(/^(\s+|\t+)?\>/, '').trimEnd();
 
         for (const ent of ents) {
           if (iresult.includes(ent)) {
