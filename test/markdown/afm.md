@@ -8,6 +8,9 @@ Dispatcher is Adobe Experience Manager's caching and/or load balancing tool. Usi
 
 The process for deploying a Dispatcher is independent of the web server and the OS platform chosen:
 
+1. New paragraphs!
+
+   Madness!
 1. From the Activities list, click **Create Activity** > **A/B Test**.
 
    ![Create Activity drop-down list](/help/assets/ab_select-new.png)
