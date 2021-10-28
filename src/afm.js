@@ -41,9 +41,9 @@ export function afm (arg = '', klass = 'extension', compiler = (x = '') => x, ma
     skip = sections.filter((i, idx) => idx % 2 === 1).map(i => `\`\`\`${i}\`\`\``),
     stmp = sections.filter((i, idx) => idx % 2 === 0).map(i => i.replace(/(^[\r?\n]+|[\r?\n]+$)/g, '')).join(eol),
     tmp = ents.reduce((a, v) => a.replace(new RegExp(lescape(v), 'g'), escape(v)), stmp),
-    exts = (tmp.match(/(?!\r?\n)(\s+|\t+)?\>\[\!.*\r?\n((\s+|\t+)?\>(?!\[\!).*\r?\n?){1,}/g) || []),
+    exts = tmp.match(/(?!\r?\n)(\s+|\t+)?\>\[\!.*\r?\n((\s+|\t+)?\>(?!\[\!).*\r?\n?){1,}/g) || [],
     lvid = Object.keys(map).filter(i => map[i] === 'VIDEO')[0] || 'VIDEO',
-    vids = (tmp.match(new RegExp(`\\>\\[\\!${lvid}\\]\\((.*)\\)`, 'g')) || []);
+    vids = tmp.match(new RegExp(`\\>\\[\\!${lvid}\\]\\((.*)\\)`, 'g')) || [];
   let result = clone(arg);
 
   for (const str of skip.values()) {
