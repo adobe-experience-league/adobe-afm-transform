@@ -103,7 +103,7 @@ export function afm (arg = '', klass = 'extension', compiler = (x = '') => x, ma
 
         return iresult;
       }).join(eol),
-      lskip = Array.from(Object.keys(position.skip)).filter(i => i.includes(og));
+      lskip = Array.from(position.skip.keys()).filter(i => i.includes(og));
 
     let lidx = result.indexOf(og);
 
