@@ -102,13 +102,12 @@ export function afm (arg = '', klass = 'extension', compiler = (x = '') => x, ma
         }
 
         return iresult;
-      }).join(eol),
-      lskip = Array.from(position.skip.keys()).filter(i => i.includes(og));
+      }).join(eol);
 
     let lidx = result.indexOf(og);
 
-    if (lskip.length > 0) {
-      lidx = pos(og, result, lskip, lidx);
+    if (skip.length > 0) {
+      lidx = pos(og, result, skip, lidx);
     }
 
     result = `${result.slice(0, lidx)}${prefix}<div class="${klass} ${ctype}">${nl}<div>${type in label ? label[type] : type}</div>${nl}<div>${eol}${body.replace(/\r?\n$/, '')}${nl}</div>${nl}</div>${nl}${result.slice(lidx + og.length)}`;
