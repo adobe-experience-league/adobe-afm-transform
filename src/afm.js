@@ -34,7 +34,7 @@ function pos (arg = '', source = '', skip = [], idx = 0) {
 
 export function afm (arg = '', klass = 'extension', compiler = (x = '') => x, map = {}, label = {}) {
   const eol = arg.includes('\r') ? '\r\n' : '\n',
-    position = {skip: new Map(), exts: new Map(), vids: new Map()},
+    position = {skip: new Map(), vids: new Map()},
     ents = Array.from(new Set(arg.match(/\&#\w+;/g) || [])),
     escaped = ents.map(i => escape(i)),
     sections = arg.split(/(?<!`|>)`{3,3}(?!`)/g),

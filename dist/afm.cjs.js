@@ -36,7 +36,7 @@ function pos (arg = '', source = '', skip = [], idx = 0) {
 
 function afm (arg = '', klass = 'extension', compiler = (x = '') => x, map = {}, label = {}) {
   const eol = arg.includes('\r') ? '\r\n' : '\n',
-    position = {skip: new Map(), exts: new Map(), vids: new Map()},
+    position = {skip: new Map(), vids: new Map()},
     ents = Array.from(new Set(arg.match(/\&#\w+;/g) || [])),
     escaped = ents.map(i => escape(i)),
     sections = arg.split(/(?<!`|>)`{3,3}(?!`)/g),
@@ -105,7 +105,7 @@ function afm (arg = '', klass = 'extension', compiler = (x = '') => x, map = {},
 
         return iresult;
       }).join(eol),
-      lskip = Array.from(Object.keys(position.skip)).filter(i => i.includes(og));
+      lskip = Array.from(position.skip.keys()).filter(i => i.includes(og));
 
     let lidx = result.indexOf(og);
 
