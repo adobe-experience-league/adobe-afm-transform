@@ -112,6 +112,10 @@ function afm (arg = '', klass = 'extension', compiler = (x = '') => x, map = {},
       lidx = pos(og, result, skip, lidx);
     }
 
+    if (lidx === -1) {
+      throw new Error(`Could not find string: ${og}`);
+    }
+
     result = `${result.slice(0, lidx)}${prefix}<div class="${klass} ${ctype}">${nl}<div>${type in label ? label[type] : type}</div>${nl}<div>${eol}${body.replace(/\r?\n$/, '')}${nl}</div>${nl}</div>${nl}${result.slice(lidx + og.length)}`;
   }
 
