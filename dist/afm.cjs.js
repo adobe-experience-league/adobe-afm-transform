@@ -36,16 +36,45 @@ function pos (arg = '', source = '', skip = [], idx = 0) {
 
 function afm (arg = '', klass = 'extension', compiler = (x = '') => x, map = {}, label = {}) {
   const eol = arg.includes('\r') ? '\r\n' : '\n',
+    position = {skip: new Map(), exts: new Map(), vids: new Map()},
     ents = Array.from(new Set(arg.match(/\&#\w+;/g) || [])),
     escaped = ents.map(i => escape(i)),
     sections = arg.split(/(?<!`|>)`{3,3}(?!`)/g),
-    skip = sections.filter((i, idx) => idx % 2 === 1).map(i => `\`\`\`${i.startsWith(eol) ? '' : eol}${i}${i.endsWith(eol) ? '' : eol}\`\`\``),
+    skip = sections.filter((i, idx) => idx % 2 === 1).map(i => `\`\`\`${i}\`\`\``),
     stmp = sections.filter((i, idx) => idx % 2 === 0).map(i => i.replace(/(^[\r?\n]+|[\r?\n]+$)/g, '')).join(eol),
     tmp = ents.reduce((a, v) => a.replace(new RegExp(lescape(v), 'g'), escape(v)), stmp),
-    exts = (tmp.match(/(?!\r?\n)(\s+|\t+)?\>\[\!.*\r?\n((\s+|\t+)?\>(?!\[\!).*\r?\n?){1,}/g) || []).filter(i => skip.filter(ii => ii.includes(i)).length === 0),
+    exts = tmp.match(/(?!\r?\n)(\s+|\t+)?\>\[\!.*\r?\n((\s+|\t+)?\>(?!\[\!).*\r?\n?){1,}/g) || [],
     lvid = Object.keys(map).filter(i => map[i] === 'VIDEO')[0] || 'VIDEO',
-    vids = (tmp.match(new RegExp(`\\>\\[\\!${lvid}\\]\\((.*)\\)`, 'g')) || []).filter(i => skip.filter(ii => ii.includes(i)).length === 0);
+    vids = tmp.match(new RegExp(`\\>\\[\\!${lvid}\\]\\((.*)\\)`, 'g')) || [];
   let result = clone(arg);
+
+  for (const str of skip.values()) {
+    const start = arg.indexOf(str),
+      end = start + str.length;
+
+    position.skip.set(str, {start, end});
+  }
+
+  const askips = Array.from(position.skip.values());
+
+  for (const str of vids.values()) {
+    const strings = Array.from(arg.matchAll(new RegExp(lescape(str), 'g'))).filter(x => {
+        let llresult = true;
+
+        if (position.skip.size > 0) {
+          const idx = x.index;
+
+          llresult = askips.filter(i => idx >= i.start && idx < i.end).length === 0;
+        }
+
+        return llresult;
+      }),
+      lresult = strings.map(s => {
+        return {start: s.index, end: s.index + s[0].length};
+      });
+
+    position.vids.set(str, lresult);
+  }
 
   for (const ext of exts) {
     const parts = ext.split(/\r?\n/).filter(i => i.length > 0 && (/[^\s]+/).test(i)),

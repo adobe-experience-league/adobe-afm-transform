@@ -53,6 +53,27 @@ export function afm (arg = '', klass = 'extension', compiler = (x = '') => x, ma
     position.skip.set(str, {start, end});
   }
 
+  const askips = Array.from(position.skip.values());
+
+  for (const str of vids.values()) {
+    const strings = Array.from(arg.matchAll(new RegExp(lescape(str), 'g'))).filter(x => {
+        let llresult = true;
+
+        if (position.skip.size > 0) {
+          const idx = x.index;
+
+          llresult = askips.filter(i => idx >= i.start && idx < i.end).length === 0;
+        }
+
+        return llresult;
+      }),
+      lresult = strings.map(s => {
+        return {start: s.index, end: s.index + s[0].length};
+      });
+
+    position.vids.set(str, lresult);
+  }
+
   for (const ext of exts) {
     const parts = ext.split(/\r?\n/).filter(i => i.length > 0 && (/[^\s]+/).test(i)),
       type = (parts[0].match(/\>\[\!(.*)\]/) || [])[1] || '',
