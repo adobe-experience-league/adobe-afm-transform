@@ -36,6 +36,7 @@ function pos (arg = '', source = '', skip = [], idx = 0) {
 
 function afm (arg = '', klass = 'extension', compiler = (x = '') => x, map = {}, label = {}) {
   const eol = arg.includes('\r') ? '\r\n' : '\n',
+    position = {skip: new Map(), vids: new Map()},
     ents = Array.from(new Set(arg.match(/\&#\w+;/g) || [])),
     escaped = ents.map(i => escape(i)),
     sections = arg.split(/(?<!`|>)`{3,3}(?!`)/g),
@@ -45,11 +46,35 @@ function afm (arg = '', klass = 'extension', compiler = (x = '') => x, map = {},
   let result = clone(arg),
     sanitized = result;
 
-  skip.forEach(i => {
-    sanitized = sanitized.replace(i, '');
-  });
+  for (const str of skip.values()) {
+    const start = arg.indexOf(str),
+      end = start + str.length;
 
-  const vids = sanitized.match(new RegExp(`\\>\\[\\!${lvid}\\]\\((.*)\\)`, 'g')) || [];
+    position.skip.set(str, {start, end});
+    sanitized = sanitized.replace(str, '');
+  }
+
+  const askips = Array.from(position.skip.values()),
+    vids = sanitized.match(new RegExp(`\\>\\[\\!${lvid}\\]\\((.*)\\)`, 'g')) || [];
+
+  for (const str of vids.values()) {
+    const strings = Array.from(arg.matchAll(new RegExp(lescape(str), 'g'))).filter(x => {
+        let llresult = true;
+
+        if (position.skip.size > 0) {
+          const idx = x.index;
+
+          llresult = askips.filter(i => idx >= i.start && idx < i.end).length === 0;
+        }
+
+        return llresult;
+      }),
+      lresult = strings.map(s => {
+        return {start: s.index, end: s.index + s[0].length};
+      });
+
+    position.vids.set(str, lresult);
+  }
 
   for (const ext of exts) {
     let lext = ext;
@@ -79,8 +104,15 @@ function afm (arg = '', klass = 'extension', compiler = (x = '') => x, map = {},
       body = `${prefix}${compiler(core).split(/\r?\n/).join(nl)}`,
       ctype = (type in map ? map[type] : type).toLowerCase().replace(/\s/g, ''),
       next = `<div class="${klass} ${ctype}">${nl}<div>${type in label ? label[type] : type}</div>${nl}<div>${eol}${body.replace(/\r?\n$/, '').trimEnd()}${nl}</div>${nl}</div>${nl}`;
+    let lidx = result.indexOf(ext);
 
-    result = result.replace(ext, next);
+    if (skip.length > 0) {
+      lidx = pos(ext, result, skip, lidx);
+    }
+
+    if (lidx > 0) {
+      result = `${result.slice(0, lidx)}${next}${result.slice(lidx + ext.length)}`;
+    }
   }
 
   for (const vid of vids) {
