@@ -39,9 +39,15 @@ export function afm (arg = '', klass = 'extension', compiler = (x = '') => x, ma
     sections = arg.split(/(?<!`|>)`{3,3}(?!`)/g),
     skip = sections.filter((i, idx) => idx % 2 === 1).map(i => `\`\`\`${i}\`\`\``),
     exts = arg.match(/\>\[\!.*\r?\n((\s+|\t+)?\>(?!\[\!).*\r?\n?){1,}/g) || [],
-    lvid = Object.keys(map).filter(i => map[i] === 'VIDEO')[0] || 'VIDEO',
-    vids = arg.match(new RegExp(`\\>\\[\\!${lvid}\\]\\((.*)\\)`, 'g')) || [];
-  let result = clone(arg);
+    lvid = Object.keys(map).filter(i => map[i] === 'VIDEO')[0] || 'VIDEO';
+  let result = clone(arg),
+    sanitized = result;
+
+  skip.forEach(i => {
+    sanitized = sanitized.replace(i, '');
+  });
+
+  const vids = sanitized.match(new RegExp(`\\>\\[\\!${lvid}\\]\\((.*)\\)`, 'g')) || [];
 
   for (const ext of exts) {
     let lext = ext;
