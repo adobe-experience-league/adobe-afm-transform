@@ -50,11 +50,11 @@ export function afm (arg = '', klass = 'extension', compiler = (x = '') => x, ma
 
     if (embedded.length > 0) {
       for (const embed of embedded) {
-        lext = lext.replace(embed, `[AFMSKIP]${embed}[/AFMSKIP]`);
+        lext = lext.replace(embed, `[AFMSKIP]${embed.replace(/(^`{3,3}|`{3,3}$)/g, '')}[/AFMSKIP]`);
       }
     }
 
-    const parts = ext.split(/\r?\n/).filter(i => i.length > 0 && (/[^\s]+/).test(i)),
+    const parts = lext.split(/\r?\n/).filter(i => i.length > 0 && (/[^\s]+/).test(i)),
       type = (parts[0].match(/\>\[\!(.*)\]/) || [])[1] || '',
       prefix = parts[0].replace(/\>\[.*/, ''),
       nl = `${eol}${prefix}`,
@@ -69,16 +69,11 @@ export function afm (arg = '', klass = 'extension', compiler = (x = '') => x, ma
 
         return iresult;
       }).filter((i, idx) => idx === 0 ? i.length > 0 : true).join(eol).trim(),
-      body = `${prefix}${compiler(core).split(/\r?\n/).join(nl)}`,
-      ctype = (type in map ? map[type] : type).toLowerCase().replace(/\s/g, '');
+      body = `${prefix}${compiler(core).split(/\r?\n/).join(nl)}`.replace(/\[AFMSKIP\]/g, '<code><pre>```').replace(/\[\/AFMSKIP\]/g, '```</pre></code>'),
+      ctype = (type in map ? map[type] : type).toLowerCase().replace(/\s/g, ''),
+      next = `${prefix}<div class="${klass} ${ctype}">${nl}<div>${type in label ? label[type] : type}</div>${nl}<div>${eol}${body.replace(/\r?\n$/, '')}${nl}</div>${nl}</div>${nl}`;
 
-    let lidx = result.indexOf(ext);
-
-    if (lidx === -1) {
-      throw new Error(`Could not find string: ${ext}`);
-    }
-
-    result = `${result.slice(0, lidx)}${prefix}<div class="${klass} ${ctype}">${nl}<div>${type in label ? label[type] : type}</div>${nl}<div>${eol}${body.replace(/\r?\n$/, '')}${nl}</div>${nl}</div>${nl}${result.slice(lidx + ext.length)}`;
+    result = result.replace(ext, next);
   }
 
   for (const vid of vids) {

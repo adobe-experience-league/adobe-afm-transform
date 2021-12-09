@@ -53,7 +53,7 @@ const path = require('path'),
 <p>[!NOTE]</p>`;
 
 describe('Adobe Flavored Markdown - afm()', function () {
-  const result = afm(markdown, void 0, void 0, {WICHTIG: 'IMPORTANT'}, {MORELIKETHIS: 'Related Articles'});
+  const result = afm(markdown, void 0, arg => md.render(arg), {WICHTIG: 'IMPORTANT'}, {MORELIKETHIS: 'Related Articles'});
 
   it('should return a string', function () {
     assert.strictEqual(typeof result, 'string');
