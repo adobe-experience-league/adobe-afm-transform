@@ -23,12 +23,22 @@ const path = require('path'),
 </div>
 </div>
 <p><img src="/help/assets/create-ab.png" alt="Create A/B Test Actity"></p>
+<div class="extension note">
+<div>NOTE</div>
+<div>
+<p><code><pre>\`\`\`
+const x = true;
+\`\`\`</pre></code></p>
+<p>For information about the various activity types, see <a href="/help/using/activities/activities.md#concept_D317A95A1AB54674BA7AB65C7985BA03">Activities</a> and the <a href="/help/using/activities/target-activities-guide.md">Target activities guide</a>.</p>
+</div>
+</div>
+<p><img src="/help/assets/create-ab.png" alt="Create A/B Test Actity"></p>
 </li>
 <li>
 <p>Learn about Dispatcher (this page). Also, see <a href="https://helpx.adobe.com/experience-manager/using/dispatcher-faq.html">frequently asked questions about dispatcher</a>.</p>
 </li>
 <li>
-<p>Install a <a href="https://helpx.adobe.com/experience-manager/6-3/sites/deploying/using/technical-requirements.html">supported web server</a> according to the web server documentation.</p>
+<p>Install a <a href="https://helpx.adobe.com/experience-manager/6-3/sites/deploying/using/technical-requirements.html">supported web server</a> according to the web server documentation.   </p>
 <div class="extension note">
 <div>NOTE</div>
 <div>
