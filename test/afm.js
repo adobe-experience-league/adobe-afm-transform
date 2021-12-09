@@ -38,7 +38,7 @@ const x = true;
 <p>Learn about Dispatcher (this page). Also, see <a href="https://helpx.adobe.com/experience-manager/using/dispatcher-faq.html">frequently asked questions about dispatcher</a>.</p>
 </li>
 <li>
-<p>Install a <a href="https://helpx.adobe.com/experience-manager/6-3/sites/deploying/using/technical-requirements.html">supported web server</a> according to the web server documentation.   </p>
+<p>Install a <a href="https://helpx.adobe.com/experience-manager/6-3/sites/deploying/using/technical-requirements.html">supported web server</a> according to the web server documentation.</p>
 <div class="extension note">
 <div>NOTE</div>
 <div>

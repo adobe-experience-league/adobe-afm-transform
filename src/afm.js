@@ -70,7 +70,7 @@ export function afm (arg = '', klass = 'extension', compiler = (x = '') => x, ma
       }).filter((i, idx) => idx === 0 ? i.length > 0 : true).join(eol).trim(),
       body = `${prefix}${compiler(core).split(/\r?\n/).join(nl)}`.replace(/\[AFMSKIP\]/g, '<code><pre>```').replace(/\[\/AFMSKIP\]/g, '```</pre></code>'),
       ctype = (type in map ? map[type] : type).toLowerCase().replace(/\s/g, ''),
-      next = `<div class="${klass} ${ctype}">${nl}<div>${type in label ? label[type] : type}</div>${nl}<div>${eol}${body.replace(/\r?\n$/, '')}${nl}</div>${nl}</div>${nl}`;
+      next = `<div class="${klass} ${ctype}">${nl}<div>${type in label ? label[type] : type}</div>${nl}<div>${eol}${body.replace(/\r?\n$/, '').trimEnd()}${nl}</div>${nl}</div>${nl}`;
 
     result = result.replace(ext, next);
   }
