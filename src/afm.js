@@ -39,7 +39,7 @@ export function afm (arg = '', klass = 'extension', compiler = (x = '') => x, ma
     sections = arg.split(/(?<!`|>)`{3,3}(?!`)/g),
     skip = sections.filter((i, idx) => idx % 2 === 1).map(i => `\`\`\`${i}\`\`\``),
     tmp = ents.reduce((a, v) => a.replace(new RegExp(lescape(v), 'g'), escape(v)), arg),
-    exts = tmp.match(/(?!\r?\n)(\s+|\t+)?\>\[\!.*\r?\n((\s+|\t+)?\>(?!\[\!).*\r?\n?){1,}/g) || [],
+    exts = arg.match(/\>\[\!.*\r?\n((\s+|\t+)?\>(?!\[\!).*\r?\n?){1,}/g) || [],
     lvid = Object.keys(map).filter(i => map[i] === 'VIDEO')[0] || 'VIDEO',
     vids = tmp.match(new RegExp(`\\>\\[\\!${lvid}\\]\\((.*)\\)`, 'g')) || [];
   let result = clone(arg);
@@ -56,7 +56,7 @@ export function afm (arg = '', klass = 'extension', compiler = (x = '') => x, ma
 
     const parts = lext.split(/\r?\n/).filter(i => i.length > 0 && (/[^\s]+/).test(i)),
       type = (parts[0].match(/\>\[\!(.*)\]/) || [])[1] || '',
-      prefix = parts[0].replace(/\>\[.*/, ''),
+      prefix = parts[1].replace(/\>.*/, ''),
       nl = `${eol}${prefix}`,
       core = parts.slice(1, parts.length).map(i => {
         let iresult = i.replace(/^(\s+|\t+)?\>/, '').trimEnd();
