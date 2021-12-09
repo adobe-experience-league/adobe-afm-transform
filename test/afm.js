@@ -26,9 +26,9 @@ const path = require('path'),
 <div class="extension note">
 <div>NOTE</div>
 <div>
-<p><code><pre>\`\`\`
+<p><pre><code>
 const x = true;
-\`\`\`</pre></code></p>
+</code></pre></p>
 <p>For information about the various activity types, see <a href="/help/using/activities/activities.md#concept_D317A95A1AB54674BA7AB65C7985BA03">Activities</a> and the <a href="/help/using/activities/target-activities-guide.md">Target activities guide</a>.</p>
 </div>
 </div>

@@ -128,5 +128,5 @@ export function afm (arg = '', klass = 'extension', compiler = (x = '') => x, ma
     result = result.replace(new RegExp(lescape(earg), 'g'), unescape(earg));
   }
 
-  return result.replace(/\[AFMSKIP\]/g, '<code><pre>```').replace(/\[\/AFMSKIP\]/g, '```</pre></code>').trim();
+  return result.replace(/\[AFMSKIP\]/g, '<pre><code>').replace(/\[\/AFMSKIP\]/g, '</code></pre>').trim();
 }
