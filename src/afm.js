@@ -8,25 +8,30 @@ function lescape (arg = '') {
   return arg.replace(/[\-\[\]{}()*+?.,\\\^\$|#]/g, '\\$&');
 }
 
-function pos (arg = '', source = '', skip = [], idx = 0) {
+function pos (arg = '', source = '', skip = [], idx = 0, askips = []) {
   let lpos = 0,
     result = idx;
-  const matches = skip.filter(i => i.includes(arg)).map(i => { // eslint-disable-line no-loop-func
-    const x = source.indexOf(i, lpos),
-      y = i.indexOf(arg),
-      z = x + y;
 
-    if (z > lpos) {
-      lpos = z;
+  if (askips.length === 0 || askips.filter(i => idx >= i.start && idx < i.end).length === 0) {
+    const matches = skip.filter(i => i.includes(arg)).map(i => { // eslint-disable-line no-loop-func
+      const x = source.indexOf(i, lpos),
+        y = i.indexOf(arg),
+        z = x + y;
+
+      if (z > lpos) {
+        lpos = z;
+      }
+
+      return z;
+    });
+
+    if (matches.includes(result)) {
+      while (matches.includes(result)) {
+        result = source.indexOf(arg, result + 1);
+      }
     }
-
-    return z;
-  });
-
-  if (matches.includes(result)) {
-    while (matches.includes(result)) {
-      result = source.indexOf(arg, result + 1);
-    }
+  } else {
+    result = -1;
   }
 
   return result;
@@ -105,7 +110,7 @@ export function afm (arg = '', klass = 'extension', compiler = (x = '') => x, ma
     let lidx = result.indexOf(ext);
 
     if (skip.length > 0) {
-      lidx = pos(ext, result, skip, lidx);
+      lidx = pos(ext, result, skip, lidx, askips);
     }
 
     if (lidx > 0) {
