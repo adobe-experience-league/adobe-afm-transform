@@ -54,5 +54,5 @@ This is a paragraph.
 ```
 
 ### License
-Copyright 2021 Adobe Inc.
+Copyright 2022 Adobe Inc.
 Licensed under the Apache-2.0 license.
