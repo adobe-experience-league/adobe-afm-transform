@@ -21,7 +21,8 @@ function scan (arg = '', strings = []) {
   return result;
 }
 
-function pos (arg = '', source = '', skip = [], idx = 0, askips = []) {
+function pos (arg = '', source = '', skip = [], idx = 0, position = {skip: new Map()}) {
+  const askips = Array.from(position.skip.values());
   let lpos = 0,
     result = idx;
 
@@ -121,11 +122,12 @@ export function afm (arg = '', klass = 'extension', compiler = (x = '') => x, ma
     let lidx = result.indexOf(ext);
 
     if (skip.length > 0) {
-      lidx = pos(ext, result, skip, lidx, askips);
+      lidx = pos(ext, result, skip, lidx, position);
     }
 
     if (lidx > 0) {
       result = `${result.slice(0, lidx)}${next}${result.slice(lidx + ext.length)}`;
+      position.skip = scan(result, skip);
     }
   }
 
