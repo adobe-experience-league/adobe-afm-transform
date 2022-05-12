@@ -10,6 +10,19 @@ function lescape (arg = '') {
   return arg.replace(/[\-\[\]{}()*+?.,\\\^\$|#]/g, '\\$&');
 }
 
+function scan (arg = '', strings = []) {
+  const result = new Map();
+
+  for (const str of strings.values()) {
+    const start = arg.indexOf(str),
+      end = start + str.length;
+
+    result.set(str, {start, end});
+  }
+
+  return result;
+}
+
 function pos (arg = '', source = '', skip = [], idx = 0, askips = []) {
   let lpos = 0,
     result = idx;
@@ -51,11 +64,9 @@ function afm (arg = '', klass = 'extension', compiler = (x = '') => x, map = {},
   let result = clone(arg),
     sanitized = result;
 
-  for (const str of skip.values()) {
-    const start = arg.indexOf(str),
-      end = start + str.length;
+  position.skip = scan(result, skip);
 
-    position.skip.set(str, {start, end});
+  for (const str of skip.values()) {
     sanitized = sanitized.replace(str, '');
   }
 
